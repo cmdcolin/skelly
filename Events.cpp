@@ -13,7 +13,6 @@ void CALLBACK KeyboardProc( UINT nChar, bool bKeyDown, bool bAltDown, void* pUse
 		case VK_F1:
 			help = !help;
 			break;
-
 		case VK_F2:
 			zw = !zw;
 			break;
@@ -24,18 +23,18 @@ void CALLBACK KeyboardProc( UINT nChar, bool bKeyDown, bool bAltDown, void* pUse
 			xw = !xw;
 			break;
 		case VK_F5:
-			::D3DXMatrixIdentity(&zw_rotation);
+			D3DXMatrixIdentity(&zw_rotation);
 			zw_time = 0;
 			zw = false;
 			break;
 
 		case VK_F6:
-			::D3DXMatrixIdentity(&yw_rotation);
+			D3DXMatrixIdentity(&yw_rotation);
 			yw_time = 0;
 			yw = false;
 			break;
 		case VK_F7:
-			::D3DXMatrixIdentity(&xw_rotation);
+			D3DXMatrixIdentity(&xw_rotation);
 			xw_time = 0;
 			xw = false;
 			break;

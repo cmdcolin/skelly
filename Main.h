@@ -31,7 +31,10 @@ HRESULT CALLBACK OnD3D9ResetDevice( IDirect3DDevice9* pd3dDevice,
 								   const D3DSURFACE_DESC* 
 								   pBackBufferSurfaceDesc,
 								   void* pUserContext );
-
+void CALLBACK OnD3D9FrameRender( IDirect3DDevice9* pd3dDevice, 
+                                double fTime, 
+                                float fElapsedTime, 
+                                void* pUserContext );
 void CALLBACK OnFrameMove( double fTime, float fElapsedTime, void* pUserContext );
 void CALLBACK OnD3D9LostDevice( void* pUserContext );
 void CALLBACK OnD3D9DestroyDevice( void* pUserContext );
@@ -43,7 +46,7 @@ void CALLBACK KeyboardProc( UINT nChar, bool bKeyDown, bool bAltDown, void* pUse
 
 
 
-
+extern WCHAR szFilename[256];
 extern ID3DXMesh*                  g_pSkull;
 extern ID3DXMesh*                  g_pSphere;
 extern ID3DXMesh*                  g_pMesh;
