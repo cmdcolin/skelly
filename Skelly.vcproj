@@ -554,10 +554,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\Documents and Settings\Colin Diesh\My Documents\foobar_old.ico"
-				>
-			</File>
-			<File
 				RelativePath="resource.h"
 				>
 			</File>
@@ -618,34 +614,42 @@
 				>
 			</File>
 		</Filter>
-		<File
-			RelativePath=".\Events.cpp"
+		<Filter
+			Name="Includes"
 			>
-		</File>
-		<File
-			RelativePath=".\Events.h"
+			<File
+				RelativePath=".\Events.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Main.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Mesh.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="Source files"
 			>
-		</File>
-		<File
-			RelativePath=".\Main.cpp"
-			>
-		</File>
-		<File
-			RelativePath=".\Main.h"
-			>
-		</File>
-		<File
-			RelativePath=".\Mesh.cpp"
-			>
-		</File>
-		<File
-			RelativePath=".\Mesh.h"
-			>
-		</File>
-		<File
-			RelativePath=".\Render.cpp"
-			>
-		</File>
+			<File
+				RelativePath=".\Events.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Main.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Mesh.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Render.cpp"
+				>
+			</File>
+		</Filter>
 	</Files>
 	<Globals>
 	</Globals>

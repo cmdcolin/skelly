@@ -233,19 +233,21 @@ void PerformRotations(double fTime, double fElapsedTime)
         -sin(xw_time), 0, 0, cos(xw_time));
 
 
-
-
     V( g_pEffect->SetMatrix( "worldview", &mWorldViewProjection ) );
-
     V( g_pEffect->SetMatrix( "zw_rotation", &zw_rotation ) );
     V( g_pEffect->SetMatrix( "yw_rotation", &yw_rotation ) );
     V( g_pEffect->SetMatrix( "xw_rotation", &xw_rotation ) );
-
     V( g_pEffect->SetMatrix( "world", &g_mWorld ) );
-    V( g_pEffect->SetValue( "view_eye", &g_vPos, sizeof( D3DXVECTOR3 ) ) );
     V( g_pEffect->SetMatrix( "wv_inv_trans", &out ) );
+
+    float ftime = (float)g_fTime;
+    V( g_pEffect->SetValue( "view_eye", &g_vPos, sizeof( D3DXVECTOR3 ) ) );
     V( g_pEffect->SetValue( "light_direction", &g_lightDir, sizeof( D3DXVECTOR3 ) ) );
-    V( g_pEffect->SetValue( "ftime", &g_fTime, sizeof( float ) ) );
+    V( g_pEffect->SetValue( "ftime", &ftime, sizeof( float ) ) );
+
+    char buf[256];
+    sprintf(buf, "%f", g_fTime);
+    OutputDebugStringA(buf);
 }
 
 
@@ -284,7 +286,7 @@ HRESULT LoadMedia( IDirect3DDevice9* pd3dDevice, LPCTSTR szFilename )
     //V_RETURN( DXUTFindDXSDKMediaFileCch( str, MAX_PATH, L"misc\\rainbow.dds" ) );
     //V_RETURN( D3DXCreateTextureFromFile( pd3dDevice, str, &g_pMeshTexture) );
 
-    V_RETURN( D3DXCreateTextureFromResource( pd3dDevice, 0, MAKEINTRESOURCE( IDR_RAINBOW ), &g_pMeshTexture ) );
+    //V_RETURN( D3DXCreateTextureFromResource( pd3dDevice, 0, MAKEINTRESOURCE( IDR_RAINBOW ), &g_pMeshTexture ) );
 
 
     DWORD dwShaderFlags = D3DXFX_NOT_CLONEABLE;
@@ -436,6 +438,7 @@ void CALLBACK OnD3D9FrameRender( IDirect3DDevice9* pd3dDevice,
     {
         PerformRotations(fTime, fElapsedTime);
 
+        V( g_pEffect->SetTexture( "mesh_texture", g_pMeshTexture ) );
         V( g_pEffect->SetTechnique( "RenderSceneCHya" ) );
 
 

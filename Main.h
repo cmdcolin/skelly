@@ -10,7 +10,7 @@
 #include "SDKmisc.h"
 #include "resource.h"
 
-
+extern WCHAR szFilename[256];
 
 HRESULT ScreenGrab( IDirect3DDevice9* pd3dDevice, LPCTSTR pDestFile);
 
@@ -46,7 +46,7 @@ void CALLBACK KeyboardProc( UINT nChar, bool bKeyDown, bool bAltDown, void* pUse
 
 
 
-extern WCHAR szFilename[256];
+
 extern ID3DXMesh*                  g_pSkull;
 extern ID3DXMesh*                  g_pSphere;
 extern ID3DXMesh*                  g_pMesh;
