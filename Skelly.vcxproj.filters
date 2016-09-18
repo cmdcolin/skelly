@@ -2,17 +2,17 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Resource Files">
-      <UniqueIdentifier>{594333d6-4194-44b3-9e44-ba237b7798d5}</UniqueIdentifier>
+      <UniqueIdentifier>{34c13359-ce82-4935-acb2-50dd5bbf48de}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe</Extensions>
     </Filter>
     <Filter Include="DXUT">
-      <UniqueIdentifier>{18e0e6f1-d619-4177-8b71-c7645822f5d0}</UniqueIdentifier>
+      <UniqueIdentifier>{fcbb7df9-40b1-4438-b01c-eb329d6d24c5}</UniqueIdentifier>
     </Filter>
     <Filter Include="Includes">
-      <UniqueIdentifier>{f7baf2ee-89b3-4124-b1ba-c545ee0edc2c}</UniqueIdentifier>
+      <UniqueIdentifier>{73ee3555-6585-4a22-be01-c3151f2f307b}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source files">
-      <UniqueIdentifier>{c109bac5-8e8a-445f-87b6-24eeeb162e46}</UniqueIdentifier>
+      <UniqueIdentifier>{afa38041-e0e3-42d2-bd7c-bc7a2c4e8268}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

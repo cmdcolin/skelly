@@ -12,8 +12,8 @@
 
 
 IDR_EFFECT1            RCDATA              "effect.fx"
-IDR_RAINBOW            RCDATA              "cellfloor.dds"
-IDR_SKULLTEX           RCDATA              "skullocc.x"
+IDR_RAINBOW            RCDATA              "textures/cellfloor.dds"
+IDR_SKULLTEX           RCDATA              "models/skullocc.x"
 /////////////////////////////////////////////////////////////////////////////
 #undef APSTUDIO_READONLY_SYMBOLS
 

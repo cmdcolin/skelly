@@ -9,3 +9,4 @@ Release
 *.sdf
 *.opensdf
 ipch
+*.old
