@@ -217,8 +217,3 @@ HRESULT CreateMappedSphere( IDirect3DDevice9* pd3dDevice,
 	// return pointer to caller
 	return S_OK;
 }
-
-
-
-
-

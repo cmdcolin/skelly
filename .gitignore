@@ -1,0 +1,11 @@
+Debug
+Profile
+Release
+.svn
+*.vcxproj.user
+*.vcproj.*.user
+*.ncb
+*.suo
+*.sdf
+*.opensdf
+ipch
