@@ -2517,7 +2517,7 @@ HRESULT CD3D10Enumeration::EnumerateOutputs( CD3D10EnumAdapterInfo* pAdapterInfo
         }
         else if( FAILED( hr ) )
         {
-            return hr;	//Something bad happened.
+            return hr;  //Something bad happened.
         }
         else //Success!
         {
@@ -2559,7 +2559,7 @@ HRESULT CD3D10Enumeration::EnumerateDisplayModes( CD3D10EnumOutputInfo* pOutputI
         {
             DXGI_FORMAT_R8G8B8A8_UNORM_SRGB,     //This is DXUT's preferred mode
 
-            DXGI_FORMAT_R8G8B8A8_UNORM,			
+            DXGI_FORMAT_R8G8B8A8_UNORM,         
             DXGI_FORMAT_R16G16B16A16_FLOAT,
             DXGI_FORMAT_R10G10B10A2_UNORM
         };
@@ -2581,8 +2581,8 @@ HRESULT CD3D10Enumeration::EnumerateDisplayModes( CD3D10EnumOutputInfo* pOutputI
     for( int f = 0; f < allowedAdapterFormatArrayCount; ++f )
     {
         // Fast-path: Try to grab at least 512 modes.
-        //			  This is to avoid calling GetDisplayModeList more times than necessary.
-        //			  GetDisplayModeList is an expensive call.
+        //            This is to avoid calling GetDisplayModeList more times than necessary.
+        //            GetDisplayModeList is an expensive call.
         UINT NumModes = 512;
         DXGI_MODE_DESC* pDesc = new DXGI_MODE_DESC[ NumModes ];
         assert( pDesc );
@@ -2753,7 +2753,7 @@ HRESULT CD3D10Enumeration::EnumerateDeviceCombos( IDXGIFactory* pFactory, CD3D10
                 {
                     DXGI_FORMAT_R8G8B8A8_UNORM_SRGB,   //This is DXUT's preferred mode
 
-                    DXGI_FORMAT_R8G8B8A8_UNORM,		
+                    DXGI_FORMAT_R8G8B8A8_UNORM,     
                     DXGI_FORMAT_R16G16B16A16_FLOAT,
                     DXGI_FORMAT_R10G10B10A2_UNORM
                 };

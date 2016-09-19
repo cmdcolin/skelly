@@ -3,8 +3,8 @@
 // Used by EmptyProject.rc
 //
 #define IDI_MAIN_ICON                   101
-#define IDR_EFFECT1						102
-#define IDR_SKULLTEX					103
+#define IDR_EFFECT1                     102
+#define IDR_SKULLTEX                    103
 
 // Next default values for new objects
 // 

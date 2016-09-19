@@ -62,23 +62,16 @@ INT WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 
 
 
-
-//--------------------------------------------------------------------------------------
 // Rejects any D3D9 devices that aren't acceptable to the app by returning false
 //--------------------------------------------------------------------------------------
-bool CALLBACK IsD3D9DeviceAcceptable( D3DCAPS9* pCaps, D3DFORMAT AdapterFormat, 
-                                     D3DFORMAT BackBufferFormat,
-                                     bool bWindowed, void* pUserContext )
-{
-    if( pCaps->PixelShaderVersion < D3DPS_VERSION(2,0) )
+bool CALLBACK IsD3D9DeviceAcceptable(D3DCAPS9* pCaps, D3DFORMAT AdapterFormat, D3DFORMAT BackBufferFormat, bool bWindowed, void* pUserContext ) {
+    if (pCaps->PixelShaderVersion < D3DPS_VERSION(2,0)) {
         return false;
+    }
 
     // Typically want to skip back buffer formats that don't support alpha blending
     IDirect3D9* pD3D = DXUTGetD3D9Object();
-    if( FAILED( pD3D->CheckDeviceFormat( pCaps->AdapterOrdinal, pCaps->DeviceType,
-        AdapterFormat, D3DUSAGE_QUERY_POSTPIXELSHADER_BLENDING,
-        D3DRTYPE_TEXTURE, BackBufferFormat ) ) )
-    {
+    if (FAILED(pD3D->CheckDeviceFormat(pCaps->AdapterOrdinal, pCaps->DeviceType, AdapterFormat, D3DUSAGE_QUERY_POSTPIXELSHADER_BLENDING, D3DRTYPE_TEXTURE, BackBufferFormat))) {
         return false;
     }
 

@@ -41,7 +41,7 @@ private:
 
 ID3DXMesh*                  g_pSkull = NULL;
 ID3DXMesh*                  g_pMesh = NULL;
-ID3DXSprite*				g_pTextSprite = NULL;
+ID3DXSprite*                g_pTextSprite = NULL;
 
 IDirect3DTexture9*          g_pMeshTexture = NULL;
 ID3DXFont*                  g_pFont = NULL;
@@ -59,21 +59,23 @@ IDirect3DSurface9* g_pFrameBufferSurface;
 
 IDirect3DDevice9 * g_pd3dDevice;
 
-D3DXMATRIXA16               g_mWorld;
-D3DXMATRIXA16               g_mProj;
-D3DXMATRIXA16               g_mView;
-D3DXMATRIXA16               g_mCenterWorld;
+D3DXMATRIXA16 g_mWorld;
+D3DXMATRIXA16 g_mProj;
+D3DXMATRIXA16 g_mView;
+D3DXMATRIXA16 g_mCenterWorld;
 
 
-D3DXMATRIXA16               zw_rotation;
-D3DXMATRIXA16				yw_rotation;
-D3DXMATRIXA16				xw_rotation;
-D3DXMATRIXA16				xy_rotation;
-D3DXMATRIXA16				yz_rotation;
-D3DXMATRIXA16				xz_rotation;
+D3DXMATRIXA16  zw_rotation;
+D3DXMATRIXA16 yw_rotation;
+D3DXMATRIXA16 xw_rotation;
+D3DXMATRIXA16  xy_rotation;
+D3DXMATRIXA16 yz_rotation;
+D3DXMATRIXA16 xz_rotation;
 
 bool zw, yw, xw, xy, yz, xz;
-double zw_time, yw_time, xw_time;
+double zw_time;
+double yw_time;
+double xw_time;
 double g_fTime = 0;
 
 bool help = false;
@@ -81,7 +83,7 @@ bool refresh = true;
 bool shader = true;
 
 
-CModelViewerCamera          g_Camera; 
+CModelViewerCamera g_Camera; 
 D3DXVECTOR3 g_vPos;
 D3DXVECTOR3 g_vLook;
 D3DXVECTOR3 g_vUp;
@@ -123,26 +125,17 @@ const D3DVERTEXELEMENT9 PPVERT::Decl[4] =
 };
 
 
-void RenderText()
-{
-    CDXUTTextHelper txtHelper( g_pFont, g_pTextSprite, 15 );
+void RenderText() {
+    CDXUTTextHelper txtHelper(g_pFont, g_pTextSprite, 15);
 
     txtHelper.Begin();
-    txtHelper.SetInsertionPos( 5, 5 );
-    txtHelper.SetForegroundColor( D3DXCOLOR( 1.0f, 1.0f, 1.0f, 1.0f ) );
+    txtHelper.SetInsertionPos(5, 5);
+    txtHelper.SetForegroundColor(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 
-    //txtHelper.DrawTextLine( DXUTGetFrameStats() );
-    //txtHelper.DrawTextLine( DXUTGetDeviceStats() );
+    if (help) {
+        txtHelper.DrawFormattedTextLine(L"FPS: %f %f", DXUTGetFPS(), g_d);
 
-
-
-
-    if(help)
-        txtHelper.DrawFormattedTextLine( L"FPS: %f %f", DXUTGetFPS(), g_d );
-
-    if(help)
-        txtHelper.DrawFormattedTextLine( 
-        L"F1 - Toggle Help\n\
+        txtHelper.DrawFormattedTextLine(L"F1 - Toggle Help\n\
          F2 - Toggle ZW rotation\n\
          F3 - Toggle YW rotation\n\
          F4 - Toggle XW rotation\n\
@@ -153,7 +146,8 @@ void RenderText()
          F9 - Toggle Refresh\n\
          F10 - Change Mesh\n\
          F11 - Toggle Fullscreen\n\
-         F12 - Screengrab to C:\\" );
+         F12 - Screengrab to C:\\");
+    }
 
 
     txtHelper.End();
@@ -175,17 +169,18 @@ HRESULT ScreenGrab( IDirect3DDevice9* pd3dDevice, LPCTSTR pDestFile)
 
     // Get the front buffer and save it to a file
 
-    if( SUCCEEDED( pd3dDevice->GetFrontBufferData(0, pd3dsFront) ) )
+    if (SUCCEEDED( pd3dDevice->GetFrontBufferData(0, pd3dsFront))) {
         D3DXSaveSurfaceToFile(pDestFile, D3DXIFF_BMP, pd3dsFront, NULL, NULL);
-
+    }
     // Release the surface
 
-    if( pd3dsFront ) pd3dsFront->Release();
+    if (pd3dsFront) {
+        pd3dsFront->Release();
+    }
     return S_OK;
 }
 
-void PerformRotations(double fTime, double fElapsedTime)
-{		
+void PerformRotations(double fTime, double fElapsedTime) {       
     HRESULT hr;
 
     // Get the projection & view matrix from the camera class
@@ -205,26 +200,26 @@ void PerformRotations(double fTime, double fElapsedTime)
 
     g_fTime += fElapsedTime;
 
-    if(zw)
-        zw_time  += fElapsedTime/4;
-
+    if (zw) {
+        zw_time += fElapsedTime / 4;
+    }
+    if (yw) {
+        yw_time += fElapsedTime / 4;
+    }
+    if (xw) {
+        xw_time += fElapsedTime / 4;
+    }
     zw_rotation = D3DXMATRIXA16(
         1, 0, 0, 0,
         0, 1, 0, 0,
         0, 0, cos(zw_time), -sin(zw_time),
         0, 0, sin(zw_time), cos(zw_time));
 
-    if(yw)
-        yw_time  += fElapsedTime/4;
-
     yw_rotation = D3DXMATRIXA16(
-        1,	0,	0,	0,
-        0,	cos(yw_time),	0,	-sin(yw_time),
-        0,	0,	1,	0,
-        0,	sin(yw_time),	0,	cos(yw_time));
-
-    if(xw)
-        xw_time += fElapsedTime/4;
+        1,  0,  0,  0,
+        0,  cos(yw_time),   0,  -sin(yw_time),
+        0,  0,  1,  0,
+        0,  sin(yw_time),   0,  cos(yw_time));
 
     xw_rotation = D3DXMATRIXA16(
         cos(xw_time), 0, 0, sin(xw_time),
@@ -233,17 +228,17 @@ void PerformRotations(double fTime, double fElapsedTime)
         -sin(xw_time), 0, 0, cos(xw_time));
 
 
-    V( g_pEffect->SetMatrix( "worldview", &mWorldViewProjection ) );
-    V( g_pEffect->SetMatrix( "zw_rotation", &zw_rotation ) );
-    V( g_pEffect->SetMatrix( "yw_rotation", &yw_rotation ) );
-    V( g_pEffect->SetMatrix( "xw_rotation", &xw_rotation ) );
-    V( g_pEffect->SetMatrix( "world", &g_mWorld ) );
-    V( g_pEffect->SetMatrix( "wv_inv_trans", &out ) );
+    V(g_pEffect->SetMatrix("worldview", &mWorldViewProjection));
+    V(g_pEffect->SetMatrix("zw_rotation", &zw_rotation));
+    V(g_pEffect->SetMatrix("yw_rotation", &yw_rotation));
+    V(g_pEffect->SetMatrix("xw_rotation", &xw_rotation));
+    V(g_pEffect->SetMatrix("world", &g_mWorld));
+    V(g_pEffect->SetMatrix("wv_inv_trans", &out));
 
-    float ftime = (float)g_fTime;
-    V( g_pEffect->SetValue( "view_eye", &g_vPos, sizeof( D3DXVECTOR3 ) ) );
-    V( g_pEffect->SetValue( "light_direction", &g_lightDir, sizeof( D3DXVECTOR3 ) ) );
-    V( g_pEffect->SetValue( "ftime", &ftime, sizeof( float ) ) );
+    float ftime = (float) g_fTime;
+    V(g_pEffect->SetValue("view_eye", &g_vPos, sizeof(D3DXVECTOR3)));
+    V(g_pEffect->SetValue("light_direction", &g_lightDir, sizeof(D3DXVECTOR3)));
+    V(g_pEffect->SetValue("ftime", &ftime, sizeof(float)));
 
     char buf[256];
     sprintf(buf, "%f", g_fTime);
@@ -271,31 +266,20 @@ bool CALLBACK ModifyDeviceSettings( DXUTDeviceSettings* pDeviceSettings, void* p
     return true;
 }
 
-HRESULT LoadMedia( IDirect3DDevice9* pd3dDevice, LPCTSTR szFilename )
-{
-
+HRESULT LoadMedia( IDirect3DDevice9* pd3dDevice, LPCTSTR szFilename ) {
     HRESULT hr;
-    V_RETURN( D3DXCreateFont( pd3dDevice, 12, 0, FW_BOLD, 1, FALSE, DEFAULT_CHARSET,
-        OUT_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE,
-        L"Courier", &g_pFont ) );
+    V_RETURN(D3DXCreateFont(pd3dDevice, 12, 0, FW_BOLD, 1, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, L"Courier", &g_pFont));
+    V_RETURN(D3DXCreateSprite(pd3dDevice, &g_pTextSprite));
 
-    V_RETURN( D3DXCreateSprite( pd3dDevice, &g_pTextSprite ) );
-    V_RETURN( LoadMesh( pd3dDevice, L"misc\\skullocc.x", &g_pMesh ) );
 
-    //WCHAR str[MAX_PATH];
-    //V_RETURN( DXUTFindDXSDKMediaFileCch( str, MAX_PATH, L"misc\\rainbow.dds" ) );
-    //V_RETURN( D3DXCreateTextureFromFile( pd3dDevice, str, &g_pMeshTexture) );
-
-    //V_RETURN( D3DXCreateTextureFromResource( pd3dDevice, 0, MAKEINTRESOURCE( IDR_RAINBOW ), &g_pMeshTexture ) );
+    V_RETURN(LoadMesh( pd3dDevice, L"misc\\skullocc.x", &g_pMesh));
 
 
     DWORD dwShaderFlags = D3DXFX_NOT_CLONEABLE;
 
-#if defined( DEBUG ) || defined( _DEBUG )
+#if defined(DEBUG) || defined(_DEBUG)
     dwShaderFlags |= D3DXSHADER_DEBUG;
 #endif
-
-
 
     LPD3DXBUFFER pBufferErrors = NULL;
 
@@ -309,35 +293,18 @@ HRESULT LoadMedia( IDirect3DDevice9* pd3dDevice, LPCTSTR szFilename )
         MessageBoxA(NULL, (LPCSTR)pCompilErrors, "Fx Compile Error",
             MB_OK|MB_ICONEXCLAMATION);
 
-        SAFE_RELEASE(pBufferErrors);	
+        SAFE_RELEASE(pBufferErrors);    
     }
-
-    /*hr = D3DXCreateEffectFromFile(
-    pd3dDevice, L"posteffect.fx", 0, 0, dwShaderFlags, 0, &g_pPostEffect, &pBufferErrors );
-
-    if( FAILED(hr) )
-    {
-    LPVOID pCompilErrors = pBufferErrors->GetBufferPointer();
-    MessageBoxA(NULL, (LPCSTR)pCompilErrors, "Fx Compile Error",
-    MB_OK|MB_ICONEXCLAMATION);
-
-    SAFE_RELEASE(pBufferErrors);	
-    }*/
-
 
     return hr;
 }
 
 
-//--------------------------------------------------------------------------------------
 // Create any D3D9 resources that will live through a device reset (D3DPOOL_MANAGED)
 // and aren't tied to the back buffer size
-//--------------------------------------------------------------------------------------
-HRESULT CALLBACK OnD3D9CreateDevice( IDirect3DDevice9* pd3dDevice, const D3DSURFACE_DESC* pBackBufferSurfaceDesc,
-                                    void* pUserContext )
-{    
+HRESULT CALLBACK OnD3D9CreateDevice(IDirect3DDevice9* pd3dDevice, const D3DSURFACE_DESC* pBackBufferSurfaceDesc, void* pUserContext) {    
     HRESULT hr;
-    V_RETURN( LoadMedia( pd3dDevice, szFilename ) );
+    V_RETURN(LoadMedia(pd3dDevice, szFilename));
 
     D3DXVECTOR3* pData;
     D3DXVECTOR3 vCenter;
@@ -347,63 +314,52 @@ HRESULT CALLBACK OnD3D9CreateDevice( IDirect3DDevice9* pd3dDevice, const D3DSURF
     UINT uVertexSize = D3DXGetFVFVertexSize(dwFVF);
     DWORD dwVertices = g_pMesh->GetNumVertices();
 
-    V( g_pMesh->LockVertexBuffer( 0, ( LPVOID* )&pData ) );
-    V( D3DXComputeBoundingSphere( pData, dwVertices, uVertexSize, &vCenter, &fObjectRadius ) );
-    V( g_pMesh->UnlockVertexBuffer() );
+    V(g_pMesh->LockVertexBuffer(0, ( LPVOID* )&pData));
+    V(D3DXComputeBoundingSphere(pData, dwVertices, uVertexSize, &vCenter, &fObjectRadius));
+    V(g_pMesh->UnlockVertexBuffer());
 
     D3DXMatrixIdentity(&g_mCenterWorld);
 
     // Set effect variables as needed
-    D3DXCOLOR diffuse( 0.1f, 0.2f, 0.2f, 1.0f );
-    D3DXCOLOR ambient( 0.1f, 0.1f, 0.1f, 1.0f );
-    D3DXCOLOR spex( 0.1f, 0.1f, 0.1f, 1.0f );
+    D3DXCOLOR diffuse(0.1f, 0.2f, 0.2f, 1.0f);
+    D3DXCOLOR ambient(0.1f, 0.1f, 0.1f, 1.0f);
+    D3DXCOLOR specular(0.1f, 0.1f, 0.1f, 1.0f);
 
 
-    V_RETURN( g_pEffect->SetValue( "diffuse", &ambient, sizeof( D3DXCOLOR ) ) );
-    V_RETURN( g_pEffect->SetValue( "ambient", &diffuse, sizeof( D3DXCOLOR ) ) );
-    V_RETURN( g_pEffect->SetValue( "specular", &spex, sizeof( D3DXCOLOR ) ) );
-    V_RETURN( g_pEffect->SetTexture( "mesh_texture", g_pMeshTexture ) );
+    V_RETURN(g_pEffect->SetValue("diffuse", &ambient, sizeof(D3DXCOLOR)));
+    V_RETURN(g_pEffect->SetValue("ambient", &diffuse, sizeof(D3DXCOLOR)));
+    V_RETURN(g_pEffect->SetValue("specular", &specular, sizeof(D3DXCOLOR)));
+    V_RETURN(g_pEffect->SetTexture("mesh_texture", g_pMeshTexture));
 
 
-    g_lightDir = D3DXVECTOR3  ( 1.0f, 0.0f, 0.0f );
-    g_lightColor = D3DXCOLOR  ( 0.0f, 1.0f, -0.0f, 0.0f );
+    g_lightDir = D3DXVECTOR3(1.0f, 0.0f, 0.0f);
+    g_lightColor = D3DXCOLOR(0.0f, 1.0f, -0.0f, 0.0f);
 
-    D3DXVECTOR3 vecEye( 0.0f, 3.0f, -6.0f );
-    D3DXVECTOR3 vecAt ( 0.0f, 0.0f, -0.0f );
+    D3DXVECTOR3 vecEye(0.0f, 3.0f, -6.0f);
+    D3DXVECTOR3 vecAt(0.0f, 0.0f, -0.0f);
 
-    g_Camera.SetViewParams( &vecEye, &vecAt );
-    g_Camera.SetRadius( fObjectRadius * 3.0f, fObjectRadius * 0.5f);//, fObjectRadius * 10.0f );
-
+    g_Camera.SetViewParams(&vecEye, &vecAt);
+    g_Camera.SetRadius(fObjectRadius * 3.0f, fObjectRadius * 0.5f);
 
     // Retrieve info from the current frame buffer
-    V_RETURN( pd3dDevice->GetRenderTarget(0, &g_pFrameBufferSurface) );
+    V_RETURN(pd3dDevice->GetRenderTarget(0, &g_pFrameBufferSurface));
 
     // get the description for the texture we want to filter
     D3DSURFACE_DESC ddsd;
 
     // Get screen descriptor (current frame buffer = screen)
-    V_RETURN( g_pFrameBufferSurface->GetDesc(&ddsd) );
+    V_RETURN(g_pFrameBufferSurface->GetDesc(&ddsd));
 
     // Create render-to-texture
-    V_RETURN( pd3dDevice->CreateTexture(ddsd.Width, ddsd.Height,
-        1, D3DUSAGE_RENDERTARGET, ddsd.Format, D3DPOOL_DEFAULT,
-        &g_pRenderTargetTexture, 0));
-
-    V_RETURN( pd3dDevice->CreateTexture(ddsd.Width, ddsd.Height,
-        1, D3DUSAGE_DYNAMIC, ddsd.Format, D3DPOOL_SYSTEMMEM,
-        &g_pCopyTexture, 0));
-
-
-    V_RETURN( pd3dDevice->CreateTexture(ddsd.Width, ddsd.Height,
-        1, D3DUSAGE_DYNAMIC, ddsd.Format, D3DPOOL_DEFAULT,
-        &g_pCopyTextureDefault, 0));
+    V_RETURN(pd3dDevice->CreateTexture(ddsd.Width, ddsd.Height, 1, D3DUSAGE_RENDERTARGET, ddsd.Format, D3DPOOL_DEFAULT, &g_pRenderTargetTexture, 0));
+    V_RETURN(pd3dDevice->CreateTexture(ddsd.Width, ddsd.Height, 1, D3DUSAGE_DYNAMIC, ddsd.Format, D3DPOOL_SYSTEMMEM, &g_pCopyTexture, 0));
+    V_RETURN(pd3dDevice->CreateTexture(ddsd.Width, ddsd.Height, 1, D3DUSAGE_DYNAMIC, ddsd.Format, D3DPOOL_DEFAULT, &g_pCopyTextureDefault, 0));
 
     // Create render-to-texture surface
-    V_RETURN( g_pRenderTargetTexture->GetSurfaceLevel(0, &g_pRenderTargetSurface) );
+    V_RETURN(g_pRenderTargetTexture->GetSurfaceLevel(0, &g_pRenderTargetSurface));
 
     // Create vertex declaration for post-process
-    if( FAILED( hr = pd3dDevice->CreateVertexDeclaration( PPVERT::Decl, &g_pVertDeclPP ) ) )
-    {
+    if (FAILED(hr = pd3dDevice->CreateVertexDeclaration(PPVERT::Decl, &g_pVertDeclPP))) {
         return hr;
     }
 
@@ -412,26 +368,17 @@ HRESULT CALLBACK OnD3D9CreateDevice( IDirect3DDevice9* pd3dDevice, const D3DSURF
 }
 
 
-
-
-//--------------------------------------------------------------------------------------
 // Render the scene using the D3D9 device
-//--------------------------------------------------------------------------------------
-void CALLBACK OnD3D9FrameRender( IDirect3DDevice9* pd3dDevice, 
-                                double fTime, 
-                                float fElapsedTime, 
-                                void* pUserContext )
-{
+void CALLBACK OnD3D9FrameRender(IDirect3DDevice9* pd3dDevice, double fTime, float fElapsedTime, void* pUserContext) {
     HRESULT hr;
 
     g_pd3dDevice = pd3dDevice;
-    V( pd3dDevice->Clear(0, NULL, D3DCLEAR_ZBUFFER | D3DCLEAR_TARGET, 
-        D3DCOLOR_XRGB(0x00, 0x0, 0x0), 1.0f, 0) );
+    V(pd3dDevice->Clear(0, NULL, D3DCLEAR_ZBUFFER | D3DCLEAR_TARGET, D3DCOLOR_XRGB(0x00, 0x0, 0x0), 1.0f, 0));
 
 
     // Save render target 0 so we can restore it later
     IDirect3DSurface9* pOldRT;
-    pd3dDevice->GetRenderTarget( 0, &pOldRT );
+    pd3dDevice->GetRenderTarget(0, &pOldRT);
 
 
     if( SUCCEEDED( pd3dDevice->BeginScene() ) )
@@ -532,10 +479,8 @@ void CALLBACK OnD3D9FrameRender( IDirect3DDevice9* pd3dDevice,
             DWORD* dummy2 = (DWORD*)rect2.pBits;
 
 
-            for(int i = 0; i < pd3dsdBackBuffer->Width; i++)
-            {
-                for(int j = 0; j < pd3dsdBackBuffer->Height; j++)
-                {
+            for(int i = 0; i < pd3dsdBackBuffer->Width; i++) {
+                for(int j = 0; j < pd3dsdBackBuffer->Height; j++) {
                     //0->Blue, 1->Green, 2->Red, 3->Alpha
                     int pixel = dummy[j*rect.Pitch/sizeof(DWORD) + i];
 
@@ -544,14 +489,21 @@ void CALLBACK OnD3D9FrameRender( IDirect3DDevice9* pd3dDevice,
                     int g = (pixel & 0x0000FF00) >> 8;
                     int b = (pixel & 0x000000FF);
 
-                    //a /= 3;
-                    //r /= 3;
-                    //b /= 3;
-                    //g /= 3;
-
-                    if (r<25 || r>220) r = 0; else r = 0xFF;
-                    if (g<25 || g>220) g = 0; else g = 0xFF;
-                    if (b<25 || b>220) b = 0; else b = 0xFF;
+                    if (r < 25 || r > 220) {
+                        r = 0;
+                    } else {
+                        r = 0xFF;
+                    }
+                    if (g < 25 || g > 220) {
+                        g = 0;
+                    } else {
+                        g = 0xFF;
+                    }
+                    if (b < 25 || b > 220) {
+                        b = 0;
+                    } else {
+                        b = 0xFF;
+                    }
 
                     int pixel2 = (a << 24) + (r << 16) + (g << 8) + b;
 
@@ -593,50 +545,26 @@ void CALLBACK OnD3D9FrameRender( IDirect3DDevice9* pd3dDevice,
         V( pd3dDevice->EndScene() );
     }
 
-    //// Create a seperate copy of the texture
-    //for(DWORD level = 0; level < g_pRenderTargetTexture->GetLevelCount(); level++)
-    //{
-    //	LPDIRECT3DSURFACE9 source = NULL;
-    //	g_pRenderTargetTexture->GetSurfaceLevel(level, &source);
-
-    //	LPDIRECT3DSURFACE9 dest = NULL;
-    //	g_pCopyTexture->GetSurfaceLevel(level, &dest);
-
-    //	V(pd3dDevice->StretchRect(source, NULL, dest, NULL, D3DTEXF_NONE));
-
-    //	source->Release();
-    //	dest->Release();
-    //}
-
-
-
-
-
     // Restore old render target 0 (back buffer)
-    V( pd3dDevice->SetRenderTarget( 0, pOldRT ) );
-    SAFE_RELEASE( pOldRT );
-
-
+    V(pd3dDevice->SetRenderTarget(0, pOldRT));
+    SAFE_RELEASE(pOldRT);
 }
 
 
 
 
-//--------------------------------------------------------------------------------------
-// Release D3D9 resources created in the OnD3D9CreateDevice callback 
-//--------------------------------------------------------------------------------------
-void CALLBACK OnD3D9DestroyDevice( void* pUserContext )
-{    
-    SAFE_RELEASE( g_pTextSprite );
-    SAFE_RELEASE( g_pEffect );
-    SAFE_RELEASE( g_pFont );
-    SAFE_RELEASE( g_pSkull );
-    SAFE_RELEASE( g_pMesh );
-    SAFE_RELEASE( g_pMeshTexture );
-    SAFE_RELEASE( g_pRenderTargetTexture );
-    SAFE_RELEASE( g_pCopyTexture );
-    SAFE_RELEASE( g_pCopyTextureDefault );
-    SAFE_RELEASE( g_pRenderTargetSurface );
-    SAFE_RELEASE( g_pFrameBufferSurface );
-    SAFE_RELEASE( g_pVertDeclPP );
+// Release D3D9 resources created in the OnD3D9CreateDevice callback
+void CALLBACK OnD3D9DestroyDevice(void* pUserContext) {    
+    SAFE_RELEASE(g_pTextSprite);
+    SAFE_RELEASE(g_pEffect);
+    SAFE_RELEASE(g_pFont);
+    SAFE_RELEASE(g_pSkull);
+    SAFE_RELEASE(g_pMesh);
+    SAFE_RELEASE(g_pMeshTexture);
+    SAFE_RELEASE(g_pRenderTargetTexture);
+    SAFE_RELEASE(g_pCopyTexture);
+    SAFE_RELEASE(g_pCopyTextureDefault);
+    SAFE_RELEASE(g_pRenderTargetSurface);
+    SAFE_RELEASE(g_pFrameBufferSurface);
+    SAFE_RELEASE(g_pVertDeclPP);
 }

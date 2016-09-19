@@ -15,22 +15,22 @@ extern WCHAR szFilename[256];
 HRESULT ScreenGrab( IDirect3DDevice9* pd3dDevice, LPCTSTR pDestFile);
 
 bool CALLBACK IsD3D9DeviceAcceptable( D3DCAPS9* pCaps, 
-									 D3DFORMAT AdapterFormat, 
-									 D3DFORMAT BackBufferFormat,
-									 bool bWindowed, 
-									 void* pUserContext );
+                                     D3DFORMAT AdapterFormat, 
+                                     D3DFORMAT BackBufferFormat,
+                                     bool bWindowed, 
+                                     void* pUserContext );
 
 bool CALLBACK ModifyDeviceSettings( DXUTDeviceSettings* pDeviceSettings, 
-								   void* pUserContext );
+                                   void* pUserContext );
 
 HRESULT CALLBACK OnD3D9CreateDevice( IDirect3DDevice9* pd3dDevice, 
-									const D3DSURFACE_DESC* pBackBufferSurfaceDesc,
-									void* pUserContext );
+                                    const D3DSURFACE_DESC* pBackBufferSurfaceDesc,
+                                    void* pUserContext );
 
 HRESULT CALLBACK OnD3D9ResetDevice( IDirect3DDevice9* pd3dDevice, 
-								   const D3DSURFACE_DESC* 
-								   pBackBufferSurfaceDesc,
-								   void* pUserContext );
+                                   const D3DSURFACE_DESC* 
+                                   pBackBufferSurfaceDesc,
+                                   void* pUserContext );
 void CALLBACK OnD3D9FrameRender( IDirect3DDevice9* pd3dDevice, 
                                 double fTime, 
                                 float fElapsedTime, 
@@ -40,7 +40,7 @@ void CALLBACK OnD3D9LostDevice( void* pUserContext );
 void CALLBACK OnD3D9DestroyDevice( void* pUserContext );
 
 LRESULT CALLBACK MsgProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam,
-						 bool* pbNoFurtherProcessing, void* pUserContext );
+                         bool* pbNoFurtherProcessing, void* pUserContext );
 
 void CALLBACK KeyboardProc( UINT nChar, bool bKeyDown, bool bAltDown, void* pUserContext );
 
@@ -50,7 +50,7 @@ void CALLBACK KeyboardProc( UINT nChar, bool bKeyDown, bool bAltDown, void* pUse
 extern ID3DXMesh*                  g_pSkull;
 extern ID3DXMesh*                  g_pSphere;
 extern ID3DXMesh*                  g_pMesh;
-extern ID3DXSprite*				g_pTextSprite;
+extern ID3DXSprite*             g_pTextSprite;
 
 extern IDirect3DTexture9*          g_pMeshTexture;
 extern ID3DXFont*                  g_pFont;
@@ -85,11 +85,11 @@ extern const int DEFAULT_SCREEN_HEIGHT;
 
 
 extern D3DXMATRIXA16               zw_rotation;
-extern D3DXMATRIXA16				yw_rotation;
-extern D3DXMATRIXA16				xw_rotation;
-extern D3DXMATRIXA16				xy_rotation;
-extern D3DXMATRIXA16				yz_rotation;
-extern D3DXMATRIXA16				xz_rotation;
+extern D3DXMATRIXA16                yw_rotation;
+extern D3DXMATRIXA16                xw_rotation;
+extern D3DXMATRIXA16                xy_rotation;
+extern D3DXMATRIXA16                yz_rotation;
+extern D3DXMATRIXA16                xz_rotation;
 
 
 extern double zw_time, yw_time, xw_time;

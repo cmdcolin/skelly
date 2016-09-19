@@ -243,8 +243,8 @@ protected:
         int m_OverrideForceVsync;         // if == 0, then it will force the app to use D3DPRESENT_INTERVAL_IMMEDIATE, if == 1 force use of D3DPRESENT_INTERVAL_DEFAULT
         bool m_OverrideRelaunchMCE;          // if true, then force relaunch of MCE at exit
         bool m_AppCalledWasKeyPressed;      // true if the app ever calls DXUTWasKeyPressed().  Allows for optimzation
-        bool m_ReleasingSwapChain;		  // if true, the app is releasing its swapchain
-        bool m_IsInGammaCorrectMode;		// Tell DXUTRes and DXUTMisc that we are in gamma correct mode
+        bool m_ReleasingSwapChain;        // if true, the app is releasing its swapchain
+        bool m_IsInGammaCorrectMode;        // Tell DXUTRes and DXUTMisc that we are in gamma correct mode
 
         LPDXUTCALLBACKMODIFYDEVICESETTINGS m_ModifyDeviceSettingsFunc; // modify Direct3D device settings callback
         LPDXUTCALLBACKDEVICEREMOVED m_DeviceRemovedFunc;        // Direct3D device removed callback
